@@ -32,12 +32,6 @@
 
 ---
 
-## 📸 Screenshots
-
-> Add screenshots or GIFs here.
-
----
-
 ## 📂 Project Structure
 
 ```text
