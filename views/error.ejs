@@ -1,7 +1,7 @@
 <% layout("/layouts/boilerplate") %>
 
 <div class="error-page fade-in">
-    <div class="error-code">404</div>
+    <div class="error-code"><%= typeof statusCode !== 'undefined' ? statusCode : 500 %></div>
     <h1 class="error-title">Oops! Something went wrong.</h1>
     <p class="error-message"><%= message %></p>
     <a href="/listings" class="btn-airbnb">

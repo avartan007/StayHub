@@ -98,8 +98,11 @@ app.all("*", (req, res, next) => {
 
 // ---- Error Handler ----
 app.use((err, req, res, next) => {
+    if (res.headersSent) {
+        return next(err);
+    }
     let { statusCode = 500, message = "Something went wrong" } = err;
-    res.status(statusCode).render("error.ejs", { message });
+    res.status(statusCode).render("error.ejs", { message, statusCode });
 });
 
 // ---- Start Server ----
