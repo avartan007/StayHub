@@ -1,22 +1,63 @@
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/"><i class="fa-regular fa-compass"></i></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid d-flex align-items-center gap-3">
+
+        <!-- Brand Logo -->
+        <a class="navbar-brand d-flex align-items-center gap-2" href="/listings">
+            <i class="fa-solid fa-house-chimney brand-icon"></i>
+            <span>WanderLust</span>
+        </a>
+
+        <!-- Mobile Toggle -->
+        <button class="navbar-toggler border-0 ms-auto me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+            aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link" href="/">Home</a>
-                <a class="nav-link" href="/listings">All Listings</a>
-                <a class="nav-link" href="/listings/new">Add new Listing</a>
-            </div>
+
+        <!-- Main Nav -->
+        <div class="collapse navbar-collapse" id="navbarMain">
+
+            <!-- Search (center) -->
+            <form class="navbar-search mx-auto" role="search" method="GET" action="/listings">
+                <input name="q" type="search" placeholder="Search destinations" aria-label="Search destinations"
+                    value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
+                <button type="submit" class="search-btn" aria-label="Search">
+                    <i class="fa fa-search fa-sm"></i>
+                </button>
+            </form>
+
+            <!-- Right Nav Links -->
+            <ul class="navbar-nav d-flex align-items-center gap-1 ms-auto">
+                <% if (currUser) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/listings/new">
+                            <i class="fa-solid fa-plus fa-sm me-1"></i> Add listing
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">
+                            <i class="fa-solid fa-right-from-bracket fa-sm me-1"></i> Logout
+                        </a>
+                    </li>
+                    <li class="nav-item ms-1">
+                        <div class="user-menu d-flex align-items-center gap-2" title="<%= currUser.username %>">
+                            <i class="fa-solid fa-bars fa-sm text-muted"></i>
+                            <div class="user-icon">
+                                <%= currUser.username.charAt(0).toUpperCase() %>
+                            </div>
+                        </div>
+                    </li>
+                <% } else { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup">Sign up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/login" class="btn btn-sm ms-2" style="background:var(--primary);color:white;border-radius:8px;padding:8px 16px;font-weight:600;">
+                            Log in
+                        </a>
+                    </li>
+                <% } %>
+            </ul>
+
         </div>
     </div>
 </nav>
-// Updated: 2026-01-13 14:20:51
-
-// Updated: 2026-01-13 14:20:51
-
-// Updated: 2026-01-13 14:24:37
-
-// Updated: 2026-01-13 14:27:25

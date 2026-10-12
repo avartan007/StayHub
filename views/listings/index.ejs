@@ -1,24 +1,123 @@
-<% layout("/layouts/boilerplate") %>
+<% layout("/layouts/boilerplate.ejs") %>
 
-  <body>
-    <h3>All Listings</h3>
-    <form method="GET" action="/listings/new">
-      <button>Create New Listing</button>
-    </form>
-    <ul>
-      <% for(let listing of allListings) { %>
-        <li><a href="/listings/<%= listing._id %>">
-            <%= listing.title %>
-          </a></li>
-        <% } %>
-    </ul>
-  </body>
+<!-- FILTERS BAR -->
+<div class="filters-wrapper">
 
-  </html>
-// Updated: 2026-01-13 14:20:51
+    <a href="/listings" class="filter-item <%= !category ? 'active' : '' %>">
+        <i class="fa-solid fa-fire"></i>
+        <span>Trending</span>
+    </a>
+    <a href="/listings?category=rooms" class="filter-item <%= category === 'rooms' ? 'active' : '' %>">
+        <i class="fa-solid fa-bed"></i>
+        <span>Rooms</span>
+    </a>
+    <a href="/listings?category=iconic" class="filter-item <%= category === 'iconic' ? 'active' : '' %>">
+        <i class="fa-solid fa-mountain-city"></i>
+        <span>Iconic City</span>
+    </a>
+    <a href="/listings?category=mountains" class="filter-item <%= category === 'mountains' ? 'active' : '' %>">
+        <i class="fa-solid fa-mountain-sun"></i>
+        <span>Mountains</span>
+    </a>
+    <a href="/listings?category=castles" class="filter-item <%= category === 'castles' ? 'active' : '' %>">
+        <i class="fa-brands fa-fort-awesome"></i>
+        <span>Castles</span>
+    </a>
+    <a href="/listings?category=arctic" class="filter-item <%= category === 'arctic' ? 'active' : '' %>">
+        <i class="fa-regular fa-snowflake"></i>
+        <span>Arctic</span>
+    </a>
+    <a href="/listings?category=camping" class="filter-item <%= category === 'camping' ? 'active' : '' %>">
+        <i class="fa-solid fa-tents"></i>
+        <span>Camping</span>
+    </a>
+    <a href="/listings?category=farms" class="filter-item <%= category === 'farms' ? 'active' : '' %>">
+        <i class="fa-solid fa-wheat-awn"></i>
+        <span>Farms</span>
+    </a>
+    <a href="/listings?category=pools" class="filter-item <%= category === 'pools' ? 'active' : '' %>">
+        <i class="fa-solid fa-person-swimming"></i>
+        <span>Amazing Pools</span>
+    </a>
+    <a href="/listings?category=beach" class="filter-item <%= category === 'beach' ? 'active' : '' %>">
+        <i class="fa-solid fa-umbrella-beach"></i>
+        <span>Beach</span>
+    </a>
+    <a href="/listings?category=island" class="filter-item <%= category === 'island' ? 'active' : '' %>">
+        <i class="fa-solid fa-sailboat"></i>
+        <span>Islands</span>
+    </a>
+    <a href="/listings?category=abroad" class="filter-item <%= category === 'abroad' ? 'active' : '' %>">
+        <i class="fa-solid fa-plane-departure"></i>
+        <span>Abroad</span>
+    </a>
 
-// Updated: 2026-01-13 14:24:37
+    <div class="tax-toggle-wrapper">
+        <div class="tax-toggle">
+            <div class="form-check form-switch mb-0">
+                <input class="form-check-input" type="checkbox" role="switch" id="taxSwitch">
+                <label class="form-check-label" for="taxSwitch">Show taxes</label>
+            </div>
+        </div>
+    </div>
+</div>
 
-// Updated: 2026-01-13 14:24:37
+<!-- SEARCH RESULTS BANNER -->
+<% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
+<div class="d-flex align-items-center gap-2 mt-3">
+    <p class="mb-0 text-muted-sm">
+        Showing results for <strong>"<%= searchQuery %>"</strong> &mdash; <%= allListings.length %> places found
+    </p>
+    <a href="/listings" class="ms-2 text-decoration-none" style="font-size:0.82rem;color:var(--primary);font-weight:600;">Clear</a>
+</div>
+<% } %>
 
-// Updated: 2026-01-13 14:27:24
+<!-- LISTINGS GRID -->
+<div class="listings-grid fade-in">
+
+    <% if (allListings.length === 0) { %>
+        <div class="empty-state">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <h4>No listings found</h4>
+            <p>Try adjusting your search or browse all listings.</p>
+            <a href="/listings" class="btn-airbnb mt-3" style="display:inline-flex;">Browse all</a>
+        </div>
+    <% } %>
+
+    <% for (let listing of allListings) { %>
+        <div class="listing-card">
+            <a href="/listings/<%= listing._id %>" class="listing-card-link">
+                <div class="listing-card-img-wrapper">
+                    <img
+                        src="<%= listing.image && listing.image.url ? listing.image.url : 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600' %>"
+                        class="listing-card-img"
+                        alt="<%= listing.title %>"
+                        loading="lazy"
+                    >
+                    <button class="wishlist-btn" aria-label="Add to wishlist" onclick="event.preventDefault(); this.querySelector('i').classList.toggle('fa-solid'); this.querySelector('i').classList.toggle('fa-regular');">
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
+                </div>
+                <div class="listing-card-info">
+                    <div class="listing-card-location"><%= listing.location %>, <%= listing.country %></div>
+                    <div class="listing-card-host">Hosted by <%= listing.owner ? listing.owner.username || 'WanderLust Host' : 'WanderLust Host' %></div>
+                    <div class="listing-card-price">
+                        <strong>&#8377; <%= listing.price.toLocaleString("en-IN") %></strong> / night
+                        <span class="tax-info">&nbsp;&nbsp;&#8377; <%= Math.round(listing.price * 1.18).toLocaleString("en-IN") %> total w/ taxes</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    <% } %>
+
+</div>
+
+<script>
+    // Tax toggle
+    const taxSwitch = document.getElementById("taxSwitch");
+    taxSwitch.addEventListener("change", () => {
+        document.querySelectorAll(".tax-info").forEach(el => {
+            el.style.display = taxSwitch.checked ? "inline" : "none";
+        });
+    });
+</script>

@@ -1,39 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout("/layouts/boilerplate.ejs") %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wanderlust — New Listing</title>
-</head>
+<div class="form-page fade-in">
+    <h1 class="form-page-title">List your place</h1>
 
-<body>
-    <h1>Create a New Listing</h1>
+    <form action="/listings" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
 
-    <!-- single valid form: method POST to /listings -->
-    <form method="POST" action="/listings">
-        <input name="listing[title]" placeholder="enter title" type="text" />
-        <br /><br />
-        <textarea name="listing[description]" placeholder="enter description"></textarea>
-        <br /><br />
-        <input name="listing[image]" placeholder="enter image URL/Link" type="text" />
-        <br /><br />
-        <input name="listing[price]" placeholder="enter price" type="number" />
-        <br /><br />
-        <input name="listing[country]" placeholder="enter country" type="text" />
-        <br /><br />
-        <input name="listing[location]" placeholder="enter location" type="text" />
-        <br /><br />
-        <button type="submit">Add</button>
+        <!-- Basic Info -->
+        <div class="form-section">
+            <div class="form-section-title">Basic Information</div>
+
+            <div class="mb-4">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" name="listing[title]" id="title"
+                    placeholder="e.g. Cozy beachfront cottage in Goa"
+                    class="form-control" required>
+                <div class="invalid-feedback">Please enter a catchy title!</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="listing[description]" id="description" rows="4"
+                    class="form-control"
+                    placeholder="Describe what makes your place special..."
+                    required></textarea>
+                <div class="invalid-feedback">Please enter a description!</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select name="listing[category]" id="category" class="form-select">
+                    <option value="rooms">Rooms</option>
+                    <option value="beach">Beach</option>
+                    <option value="mountains">Mountains</option>
+                    <option value="iconic">Iconic Cities</option>
+                    <option value="castles">Castles</option>
+                    <option value="pools">Amazing Pools</option>
+                    <option value="camping">Camping</option>
+                    <option value="farms">Farms</option>
+                    <option value="arctic">Arctic</option>
+                    <option value="island">Islands</option>
+                    <option value="abroad">Abroad</option>
+                    <option value="trending">Trending</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Photo -->
+        <div class="form-section">
+            <div class="form-section-title">Add a photo</div>
+            <div class="mb-2">
+                <label for="image" class="form-label">Upload listing image</label>
+                <input type="file" name="listing[image]" id="image" class="form-control" accept="image/*">
+                <div class="form-text text-muted-sm mt-1">JPG, PNG or JPEG &middot; Max 5MB</div>
+            </div>
+            <!-- Preview -->
+            <img id="img-preview" class="img-preview mt-2" style="display:none;" alt="Preview">
+        </div>
+
+        <!-- Price & Location -->
+        <div class="form-section">
+            <div class="form-section-title">Price & Location</div>
+
+            <div class="mb-4">
+                <label for="price" class="form-label">Price per night (&#8377;)</label>
+                <div class="input-group">
+                    <span class="input-group-text" style="border-radius:12px 0 0 12px;border-color:var(--border);">&#8377;</span>
+                    <input type="number" name="listing[price]" id="price"
+                        placeholder="1200" class="form-control"
+                        style="border-radius:0 12px 12px 0 !important;"
+                        min="0" required>
+                </div>
+                <div class="invalid-feedback">Please enter a valid price!</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="location" class="form-label">City / Area</label>
+                    <input type="text" name="listing[location]" id="location"
+                        placeholder="e.g. Manali, Himachal Pradesh"
+                        class="form-control" required>
+                    <div class="invalid-feedback">Please enter the location!</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" name="listing[country]" id="country"
+                        placeholder="e.g. India"
+                        class="form-control" required>
+                    <div class="invalid-feedback">Please enter the country!</div>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-airbnb px-5">
+            <i class="fa-solid fa-plus fa-sm"></i> Create listing
+        </button>
     </form>
+</div>
 
-</body>
-
-</html>
-// Updated: 2026-01-13 14:24:37
-
-// Updated: 2026-01-13 14:27:24
-
-// Updated: 2026-01-13 14:27:25
-
-// Updated: 2026-01-13 14:27:25
+<script>
+    // Image preview
+    document.getElementById("image").addEventListener("change", function() {
+        const file = this.files[0];
+        const preview = document.getElementById("img-preview");
+        if (file) {
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = "block";
+        } else {
+            preview.style.display = "none";
+        }
+    });
+</script>

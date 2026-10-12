@@ -1,0 +1,31 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="auth-page">
+    <div class="auth-card fade-in">
+        <h2 class="auth-card-title">Welcome back</h2>
+        <p class="auth-card-sub">Log in to your WanderLust account to continue exploring.</p>
+
+        <form action="/login" method="POST" novalidate class="needs-validation">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input name="username" id="username" type="text" class="form-control"
+                    placeholder="Your username" required>
+                <div class="invalid-feedback">Please enter your username.</div>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <input name="password" id="password" type="password" class="form-control"
+                    placeholder="Your password" required>
+                <div class="invalid-feedback">Please enter your password.</div>
+            </div>
+
+            <button type="submit" class="btn-airbnb w-100">
+                Log in
+            </button>
+        </form>
+
+        <div class="auth-footer mt-3">
+            Don't have an account? <a href="/signup">Sign up</a>
+        </div>
+    </div>
+</div>

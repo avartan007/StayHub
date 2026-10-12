@@ -1,115 +1,109 @@
-# 🏡 StayHub
+# WanderLust 🏡
 
-> A full-stack accommodation booking platform built with Node.js, Express, MongoDB, and EJS.
-
-![Node.js](https://img.shields.io/badge/Node.js-20+-green?logo=node.js)
-![Express](https://img.shields.io/badge/Express.js-black?logo=express)
-![MongoDB](https://img.shields.io/badge/MongoDB-green?logo=mongodb)
-![License](https://img.shields.io/badge/License-MIT-blue)
-
----
+A full-stack Airbnb-inspired rental listing platform built with **Node.js**, **Express**, **MongoDB**, and **EJS**.
 
 ## ✨ Features
 
-- 🏠 Browse accommodation listings
-- ➕ Create new property listings
-- ✏️ Edit existing listings
-- 🗑️ Delete listings
-- 📱 Responsive user interface
-- 🗃️ MongoDB database integration
-- ⚡ RESTful Express backend
-
----
+- 🔍 **Search** listings by title, location, or country
+- 📋 **Filter** by category (Beach, Mountains, Castles, etc.)
+- 🔐 **Authentication** — Sign up, Log in, Log out (Passport.js)
+- 🏠 **CRUD Listings** — Create, Read, Update, Delete your listings
+- ⭐ **Reviews & Ratings** — Leave star ratings and comments
+- 🗺️ **Interactive Map** — Leaflet.js with free OpenStreetMap tiles
+- 📸 **Image Upload** — Upload listing photos (stored locally)
+- 💰 **Tax Toggle** — Show prices with/without GST
+- 📱 **Responsive Design** — Mobile-friendly Airbnb-style UI
 
 ## 🛠️ Tech Stack
 
-| Category | Technologies |
-|----------|--------------|
-| Backend | Node.js, Express.js |
-| Database | MongoDB, Mongoose |
-| Frontend | EJS, HTML, CSS, Bootstrap 5 |
-| Tools | Git, Nodemon |
-
----
-
-## 📂 Project Structure
-
-```text
-StayHub/
-├── app.js
-├── models/
-├── views/
-├── public/
-├── init/
-└── package.json
-```
-
----
+| Layer      | Technology              |
+|------------|-------------------------|
+| Backend    | Node.js, Express.js     |
+| Database   | MongoDB, Mongoose       |
+| Auth       | Passport.js (local)     |
+| Views      | EJS, EJS-Mate           |
+| Styles     | Bootstrap 5, Custom CSS |
+| Map        | Leaflet.js + OpenStreetMap |
+| Upload     | Multer                  |
+| Validation | Joi                     |
 
 ## 🚀 Getting Started
 
-Clone the repository
+### Prerequisites
+- Node.js >= 18
+- MongoDB running locally
+
+### Installation
 
 ```bash
-git clone https://github.com/avartan007/StayHub.git
-
-cd StayHub
-```
-
-Install dependencies
-
-```bash
+git clone <your-repo-url>
+cd wanderlust
 npm install
 ```
 
-Start MongoDB
+### Set up environment variables
+
+Create a `.env` file in the root:
+```env
+MONGO_URL=mongodb://127.0.0.1:27017/wanderlust
+SECRET=your-long-random-secret-key
+```
+
+### Seed the database
 
 ```bash
-mongod
+npm run init
 ```
 
-Initialize sample data
+### Run in development
 
 ```bash
-node init/index.js
+npm run dev
 ```
 
-Run the application
+The app will be available at [http://localhost:8080](http://localhost:8080)
 
-```bash
-npm start
-```
-
-Open
+## 📁 Project Structure
 
 ```
-http://localhost:8080/listings
+wanderlust/
+├── controllers/       # Route handlers
+│   ├── listings.js
+│   ├── reviews.js
+│   └── users.js
+├── models/            # Mongoose schemas
+│   ├── listing.js
+│   ├── review.js
+│   └── user.js
+├── routes/            # Express routers
+│   ├── listing.js
+│   ├── review.js
+│   └── user.js
+├── views/             # EJS templates
+│   ├── layouts/
+│   ├── includes/
+│   ├── listings/
+│   └── users/
+├── public/            # Static assets
+│   ├── css/
+│   ├── js/
+│   └── uploads/
+├── init/              # DB seed data
+├── utils/             # Helpers
+├── app.js             # Entry point
+├── middleware.js      # Custom middleware
+└── schema.js          # Joi validation schemas
 ```
+
+## 🌐 Deployment
+
+This app is ready to deploy on **Render** or **Railway**:
+
+1. Push to GitHub
+2. Connect your repo on [Render](https://render.com)
+3. Set environment variables (`MONGO_URL`, `SECRET`)
+4. Use `npm start` as start command
 
 ---
 
-## 📖 Features Overview
-
-- Property listing management
-- RESTful CRUD operations
-- Dynamic server-side rendering with EJS
-- Responsive Bootstrap interface
-- MongoDB data persistence
-
----
-
-## 🔮 Future Improvements
-
-- User authentication
-- Booking system
-- Image uploads
-- Reviews & ratings
-- Search & filters
-- Interactive maps
-- Payment integration
-
----
-
-## 📄 License
-
-MIT License
+Made with ❤️ | WanderLust &copy; 2025
